@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [ :index, :show, :create ]
   resources :interests, only: [ :index, :create ]
   resources :connections, only: [ :index, :create ]
+  get '/users/by_interest/:name', to: 'users#by_interest' # rubocop:disable Style/StringLiterals
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

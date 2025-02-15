@@ -18,6 +18,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def by_interest
+    interest = Interest.find_by(name: params[:name])
+    if interest
+      render json: interest.users
+    else
+      render json: { error: "Interest not found" }, status: :not_found
+    end
+  end
+
   private
 
   def user_params

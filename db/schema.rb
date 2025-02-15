@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_114824) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_15_114952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "connections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "connected_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["connected_user_id"], name: "index_connections_on_connected_user_id"
+    t.index ["user_id"], name: "index_connections_on_user_id"
+  end
 
   create_table "interests", force: :cascade do |t|
     t.string "name"
@@ -36,6 +45,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_114824) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "connections", "users"
+  add_foreign_key "connections", "users", column: "connected_user_id"
   add_foreign_key "user_interests", "interests"
   add_foreign_key "user_interests", "users"
 end

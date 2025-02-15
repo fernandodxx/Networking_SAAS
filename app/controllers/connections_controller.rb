@@ -25,6 +25,11 @@ class ConnectionsController < ApplicationController
     end
   end
 
+  def user_connections
+    user = User.find(params[:user_id])
+    render json: user.connected_users
+  end
+
   private
 
   def connection_params

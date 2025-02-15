@@ -5,11 +5,23 @@ class ConnectionsController < ApplicationController
   end
 
   def create
-    @connection = Connection.new(connection_params)
-    if @connection.save
-      render json: @connection, status: :created
+    user = User.find(params[:user_id])
+    connected_user = User.find(params[:connected_user_id])
+
+    if user == connected_user
+      return render json: { error: "You cannot connect to yourself" }, status: :unprocessable_entity
+    end
+
+    if user.connected_users.include?(connected_user)
+      return render json: { error: "You are already connected to this user" }, status: :unprocessable_entity
+    end
+
+    connection = Connection.new(user: user, connected_user: connected_user)
+
+    if connection.save
+      render json: connection, status: :created
     else
-      render json: @connection.errors, status: :unprocessable_entity
+      render json: connection.errors, status: :unprocessable_entity
     end
   end
 

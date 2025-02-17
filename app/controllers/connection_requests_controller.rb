@@ -5,10 +5,12 @@ class ConnectionRequestsController < ApplicationController
     receiver = User.find(params[:receiver_id])
     request = ConnectionRequest.create(sender: current_user, receiver: receiver, status: "pending")
 
-    ConnectionRequestMailer.new_request_email(request).deliver_later
-
-    render json: request, status: :created
+    respond_to do |format|
+      format.html { redirect_to dashboard_path, notice: "Convite enviado!" }
+      format.json { render json: request, status: :created }
+    end
   end
+
 
 
   # Aceitar um convite

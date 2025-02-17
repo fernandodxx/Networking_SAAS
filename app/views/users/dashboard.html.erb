@@ -1,11 +1,46 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-2xl font-semibold">Bem-vindo, <%= current_user.email %>!</h1>
-  <div class="mt-4">
-    <h2 class="text-lg font-semibold">Suas Conexões</h2>
+<div class="container mx-auto p-6 grid grid-cols-3 gap-4">
+  
+  <!-- Coluna 1: Conexões -->
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Suas Conexões</h2>
     <ul>
       <% current_user.connected_users.each do |user| %>
-        <li class="p-2 border-b"><%= user.email %></li>
+        <li class="p-2 border-b flex justify-between">
+          <%= user.email %>
+          <%= link_to "Remover", disconnect_path(user), method: :delete, class: "text-red-500" %>
+        </li>
       <% end %>
     </ul>
   </div>
+
+  <!-- Coluna 2: Gerenciar Interesses -->
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Seus Interesses</h2>
+    <ul>
+      <% current_user.interests.each do |interest| %>
+        <li class="p-2 border-b flex justify-between">
+          <%= interest.name %>
+          <%= link_to "Remover", remove_interest_path(interest), method: :delete, class: "text-red-500" %>
+        </li>
+      <% end %>
+    </ul>
+    <%= form_with url: add_interest_path, method: :post do |f| %>
+      <%= f.text_field :name, placeholder: "Novo Interesse", class: "p-2 border rounded w-full" %>
+      <%= f.submit "Adicionar", class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded" %>
+    <% end %>
+  </div>
+
+  <!-- Coluna 3: Sugestões de Conexões -->
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Sugestões de Conexões</h2>
+    <ul>
+      <% @suggested_users.each do |user| %>
+        <li class="p-2 border-b flex justify-between">
+          <%= user.email %>
+          <%= link_to "Conectar", send_request_path(user), method: :post, class: "text-green-500" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
 </div>

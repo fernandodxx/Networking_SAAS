@@ -15,6 +15,10 @@ class UsersController < ApplicationController
   end
 
   def dashboard
+    @suggested_users = User.where.not(id: current_user.id)
+    .joins(:interests)
+    .where(interests: { id: current_user.interest_ids })
+    .distinct
   end
 
   def index

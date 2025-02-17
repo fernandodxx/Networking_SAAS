@@ -15,10 +15,11 @@ class UsersController < ApplicationController
   end
 
   def dashboard
-    @suggested_users = User.where.not(id: current_user.id)
-    .joins(:interests)
-    .where(interests: { id: current_user.interest_ids })
-    .distinct
+    @suggested_users = current_user.suggested_users
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def index

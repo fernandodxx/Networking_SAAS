@@ -31,16 +31,16 @@
   </div>
 
   <!-- Coluna 3: Sugestões de Conexões -->
-  <div class="bg-white p-4 rounded shadow">
-    <h2 class="text-xl font-semibold mb-2">Sugestões de Conexões</h2>
-    <ul>
-      <% @suggested_users.each do |user| %>
-        <li class="p-2 border-b flex justify-between">
-          <%= user.email %>
-          <%= link_to "Conectar", send_request_path(user), method: :post, class: "text-green-500" %>
-        </li>
-      <% end %>
-    </ul>
+  <div id="suggestions">
+    <%= turbo_frame_tag "suggestions" do %>
+      <ul>
+        <% @suggested_users.each do |user| %>
+          <li class="p-2 border-b flex justify-between">
+            <%= user.email %>
+            <%= link_to "Conectar", send_request_path(user), method: :post, class: "text-green-500", data: { turbo_stream: true } %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
-
 </div>

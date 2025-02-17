@@ -1,0 +1,19 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="bg-white p-6 rounded-lg shadow-md w-96">
+    <h2 class="text-xl font-semibold text-center mb-4">Login</h2>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="mb-4">
+        <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, class: "mt-1 block w-full p-2 border rounded-md" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.password_field :password, class: "mt-1 block w-full p-2 border rounded-md" %>
+      </div>
+      <div class="flex justify-between">
+        <%= f.submit "Entrar", class: "bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600" %>
+        <%= link_to "Cadastre-se", new_user_registration_path, class: "text-blue-500 hover:underline" %>
+      </div>
+    <% end %>
+  </div>
+</div>

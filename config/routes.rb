@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :users, only: [ :index, :show ]
-  get '/profile', to: 'users#profile' # rubocop:disable Style/StringLiterals
+  get "/profile", to: "users#profile"
+  get "/dashboard", to: "users#dashboard"
+
   resources :interests, only: [ :index, :create ]
   resources :connections, only: [ :index, :create ]
   get '/users/by_interest/:name', to: 'users#by_interest' # rubocop:disable Style/StringLiterals

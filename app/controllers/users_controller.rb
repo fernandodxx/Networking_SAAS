@@ -14,6 +14,9 @@ class UsersController < ApplicationController
     }
   end
 
+  def dashboard
+  end
+
   def index
     @users = User.all
     render json: @users

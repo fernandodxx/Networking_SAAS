@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :users, only: [ :index, :show, :create ]
+  resources :users, only: [ :index, :show ]
+  get '/profile', to: 'users#profile' # rubocop:disable Style/StringLiterals
   resources :interests, only: [ :index, :create ]
   resources :connections, only: [ :index, :create ]
   get '/users/by_interest/:name', to: 'users#by_interest' # rubocop:disable Style/StringLiterals
   get "/users/:user_id/connections", to: "connections#user_connections"
+  resources :user_interests, only: [ :index, :create ]
+  delete '/user_interests', to: 'user_interests#destroy' # rubocop:disable Style/StringLiterals
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

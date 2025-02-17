@@ -1,4 +1,6 @@
 class ConnectionsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @connections = Connection.all
     render json: @connections

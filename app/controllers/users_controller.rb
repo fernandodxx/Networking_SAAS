@@ -1,4 +1,19 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  def profile
+    render json: {
+      user: {
+        id: current_user.id,
+        email: current_user.email,
+        created_at: current_user.created_at.strftime("%d/%m/%Y"),
+        last_sign_in_at: current_user.last_sign_in_at,
+        total_connections: current_user.connected_users.count
+      },
+      interests: current_user.interests.map { |interest| interest.name },
+      connections: current_user.connected_users.map { |user| { id: user.id, email: user.email } }
+    }
+  end
+
   def index
     @users = User.all
     render json: @users

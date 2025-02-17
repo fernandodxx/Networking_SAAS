@@ -5,8 +5,11 @@ class ConnectionRequestsController < ApplicationController
     receiver = User.find(params[:receiver_id])
     request = ConnectionRequest.create(sender: current_user, receiver: receiver, status: "pending")
 
+    ConnectionRequestMailer.new_request_email(request).deliver_later
+
     render json: request, status: :created
   end
+
 
   # Aceitar um convite
   def accept

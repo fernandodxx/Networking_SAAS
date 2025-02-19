@@ -20,11 +20,12 @@
       <% current_user.interests.each do |interest| %>
         <li class="p-2 border-b flex justify-between">
           <%= interest.name %>
-          <%= link_to "Remover", remove_interest_path(interest), method: :delete, class: "text-red-500" %>
+          <%= link_to "Remover", interest_path(interest), method: :delete, class: "text-red-500" %>
+
         </li>
       <% end %>
     </ul>
-    <%= form_with url: add_interest_path, method: :post do |f| %>
+    <%= form_with url: interests_path, method: :post do |f| %>
       <%= f.text_field :name, placeholder: "Novo Interesse", class: "p-2 border rounded w-full" %>
       <%= f.submit "Adicionar", class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded" %>
     <% end %>

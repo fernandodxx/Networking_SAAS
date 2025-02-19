@@ -5,17 +5,21 @@ class InterestsController < ApplicationController
   end
 
   def create
-    @interest = Interest.new(interest_params)
-    if @interest.save
-      render json: @interest, status: :created
-    else
-      render json: @interest.errors, status: :unprocessable_entity
+    current_user.interests.create(name: params[:name])
+
+    respond_to do |format|
+      format.html { redirect_to dashboard_path, notice: "Interesse adicionado!" }
+      format.turbo_stream
     end
   end
 
-  private
+  def destroy
+    interest = current_user.interests.find(params[:id])
+    interest.destroy
 
-  def interest_params
-    params.expect(interest: [ :name ])
+    respond_to do |format|
+      format.html { redirect_to dashboard_path, notice: "Interesse removido!" }
+      format.turbo_stream
+    end
   end
 end

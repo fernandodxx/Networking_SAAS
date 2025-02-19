@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :connected_users, through: :connections, source: :connected_user
   has_many :connection_requests, foreign_key: :sender_id
   has_many :received_requests, class_name: "ConnectionRequest", foreign_key: :receiver_id
+  has_many :notifications, dependent: :destroy
 
   def suggested_users
   User.where.not(id: self.id)

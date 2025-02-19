@@ -1,5 +1,5 @@
 <div class="container mx-auto p-6 grid grid-cols-3 gap-4">
-  
+
   <!-- Coluna 1: Conexões -->
   <div class="bg-white p-4 rounded shadow">
     <h2 class="text-xl font-semibold mb-2">Suas Conexões</h2>
@@ -44,4 +44,13 @@
       </ul>
     <% end %>
   </div>
+  <h2 class="text-lg font-semibold">🔔 Notificações</h2>
+  <ul>
+    <% current_user.notifications.where(read: false).each do |notification| %>
+      <li class="p-2 border-b">
+        <%= notification.message %>
+        <%= link_to "Marcar como lida", mark_notification_path(notification), method: :patch, class: "text-blue-500" %>
+      </li>
+    <% end %>
+  </ul>
 </div>

@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   patch "/connection_requests/:id/accept", to: "connection_requests#accept"
   patch "/connection_requests/:id/decline", to: "connection_requests#decline"
 
+  resources :notifications, only: [] do
+    member do
+      patch :mark_as_read
+    end
+  end
   # Health check route
   get "up" => "rails/health#show", as: :rails_health_check
 

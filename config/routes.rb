@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   get '/users/by_interest/:name', to: 'users#by_interest' # rubocop:disable Style/StringLiterals
 
   # Interest related routes
-  resources :interests, only: [ :index, :create, :destroy ]
+  resources :interests, only: [ :index, :create ] do
+    member do
+      delete :remove, action: :destroy
+    end
+  end
+
   resources :user_interests, only: [ :index, :create ]
   delete '/user_interests', to: 'user_interests#destroy' # rubocop:disable Style/StringLiterals
 

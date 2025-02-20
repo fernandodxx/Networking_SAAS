@@ -1,7 +1,6 @@
 class InterestsController < ApplicationController
   def index
-    @interests = Interest.all
-    render json: @interests
+    @interests = current_user.interests
   end
 
   def create

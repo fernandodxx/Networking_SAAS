@@ -2,8 +2,7 @@ class ConnectionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @connections = Connection.all
-    render json: @connections
+    @connections = current_user.connections
   end
 
   def create
@@ -30,6 +29,12 @@ class ConnectionsController < ApplicationController
   def user_connections
     user = User.find(params[:user_id])
     render json: user.connected_users
+  end
+
+  def destroy
+    connection = current_user.connections.find(params[:id])
+    connection.destroy
+    redirect_to connections_path, notice: "Conexão removida!"
   end
 
   private

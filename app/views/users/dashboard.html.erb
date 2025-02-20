@@ -20,7 +20,7 @@
       <% current_user.interests.each do |interest| %>
         <li class="p-2 border-b flex justify-between">
           <%= interest.name %>
-          <%= link_to "Remover", interest_path(interest), method: :delete, class: "text-red-500" %>
+          <%= button_to "Remover", remove_interest_path(interest), method: :delete, class: "text-red-500" %>
 
         </li>
       <% end %>

@@ -1,0 +1,16 @@
+<h2 class="text-xl font-bold mb-4">📌 Seus Interesses</h2>
+
+<ul class="space-y-2">
+  <% @interests.each do |interest| %>
+    <li class="p-2 border-b flex justify-between">
+      <%= interest.name %>
+      <%= button_to "Remover", remove_interest_path(interest), method: :delete, class: "text-red-500" %>
+    </li>
+  <% end %>
+</ul>
+
+<h3 class="mt-4 text-lg font-semibold">➕ Adicionar Novo Interesse</h3>
+<%= form_with url: interests_path, method: :post do |f| %>
+  <%= f.text_field :name, placeholder: "Novo Interesse", class: "p-2 border rounded w-full" %>
+  <%= f.submit "Adicionar", class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded" %>
+<% end %>

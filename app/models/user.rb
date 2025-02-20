@@ -18,4 +18,8 @@ class User < ApplicationRecord
       .where(interests: { id: self.interest_ids })
       .distinct
   end
+  def connected_with?(other_user)
+    ConnectionRequest.exists?(sender: self, receiver: other_user, accepted: true) ||
+    ConnectionRequest.exists?(sender: other_user, receiver: self, accepted: true)
+  end
 end

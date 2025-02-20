@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :chats, only: [ :show ] do
+    resources :messages, only: [ :create ]
+  end
+
+
   resources :user_interests, only: [ :index, :create ]
   delete '/user_interests', to: 'user_interests#destroy' # rubocop:disable Style/StringLiterals
 

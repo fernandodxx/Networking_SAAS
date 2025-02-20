@@ -1,13 +1,19 @@
 class ConnectionRequestsController < ApplicationController
   before_action :authenticate_user!
 
-  def create
-    receiver = User.find(params[:receiver_id])
-    request = ConnectionRequest.create(sender: current_user, receiver: receiver, status: "pending")
+  before_action :authenticate_user!
 
-    respond_to do |format|
-      format.html { redirect_to dashboard_path, notice: "Convite enviado!" }
-      format.json { render json: request, status: :created }
+  def create
+    receiver = User.find(params[:id])
+    request = ConnectionRequest.new(sender: current_user, receiver: receiver)
+
+    if request.save
+      respond_to do |format|
+        format.turbo_stream # Atualiza a interface em tempo real
+        format.html { redirect_to users_dashboard_path, notice: "Solicitação enviada!" }
+      end
+    else
+      redirect_to users_dashboard_path, alert: "Erro ao enviar solicitação."
     end
   end
 

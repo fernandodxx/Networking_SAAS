@@ -1,0 +1,6 @@
+<div class="message <%= message.sender == current_user ? 'text-right' : 'text-left' %> p-2">
+  <span class="font-semibold"><%= message.sender.name %>:</span>
+  <p class="bg-gray-200 inline-block px-3 py-1 rounded">
+    <%= message.content %>
+  </p>
+</div>

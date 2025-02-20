@@ -1,0 +1,14 @@
+<div class="chat-container bg-white p-4 rounded shadow-md">
+  <h2 class="text-xl font-bold mb-2">Chat com <%= @recipient.name %></h2>
+
+  <div id="messages" class="messages-container h-64 overflow-y-auto border p-2">
+    <%= render @messages %>
+  </div>
+
+  <%= form_with model: [@chat, Message.new], data: { turbo_stream: true } do |f| %>
+    <div class="flex mt-2">
+      <%= f.text_field :content, class: "flex-1 p-2 border rounded", placeholder: "Digite uma mensagem..." %>
+      <%= f.submit "Enviar", class: "ml-2 px-4 py-2 bg-blue-500 text-white rounded" %>
+    </div>
+  <% end %>
+</div>
